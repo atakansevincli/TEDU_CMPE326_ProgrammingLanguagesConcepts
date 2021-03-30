@@ -1,20 +1,25 @@
-
-
 ###########   define matrix   ############
-matrix = []  
-R = 21 # 11 x grid and 10 spaces for roads
-C = 21 # 11 y grid and 10 spaces for roads
-for i in range(R):          # A for loop for row 
-    a =[]
-    for j in range(C):      # A for loop for column 
-        if j % 2 == 0 and i % 2 == 0:
-            a.append(".")
-        elif j % 2 != 0 and i % 2 == 0:
-            a.append(" ")
-        else:
-             a.append(" ")
-    matrix.append(a)
+def createMatrix(matrix): 
+    R = 21 # 11 x grid and 10 spaces for roads
+    C = 21 # 11 y grid and 10 spaces for roads
+    for i in range(R):          # A for loop for row 
+        a =[]
+        for j in range(C):      # A for loop for column 
+            if j % 2 == 0 and i % 2 == 0:
+                a.append(".")
+            elif j % 2 != 0 and i % 2 == 0:
+                a.append(" ")
+            else:
+                a.append(" ")
+        matrix.append(a)
 
+def printMatrix(matrix):
+    R = 21 # 11 x grid and 10 spaces for roads
+    C = 21 # 11 y grid and 10 spaces for roads
+    for i in range(R):
+        for j in range(C):
+            print(matrix[i][j], end = "")
+        print("")
 
 ###########   enter input  (LOGO ,ENGRAVE,SAME ) ############
 logosNames = {}
@@ -31,43 +36,30 @@ while(True):
 
     ## ENGRAVE logoName Xcordinate YCordinate
     elif arrInput[0] == "ENGRAVE":
+         matrix = []
+         createMatrix(matrix)
          if  arrInput[1] in logosNames: # is input valid? Does logoname exist?
             rotation = logosNames[arrInput[1]]  #finds rotation of logo1 in dictionary
             givenX = int(arrInput[2])    # 3
-            givenY = int(arrInput[3])    # 8
-            print(f"rotation = {rotation} , givenX = {givenX} , givenY {givenY} ")
+            givenY = int(arrInput[3])    # 8            
             currentXinGrid = (givenX - 1) * 2
             currentYinGrid = (givenY - 1) * 2 # 1 eksiğinin iki katı !!
             for movement in rotation:
                 if movement.upper() == "U":
-                    pass
+                    currentXinGrid-=1
+                    matrix[currentXinGrid][currentYinGrid] = "|"
+                    currentXinGrid-=1
                 elif movement.upper() == "D":
-                    pass
+                    currentXinGrid+=1
+                    matrix[currentXinGrid][currentYinGrid] = "|"
+                    currentXinGrid+=1
                 elif movement.upper() == "L":
-                    pass
+                    currentYinGrid-=1
+                    matrix[currentXinGrid][currentYinGrid] = "-"
+                    currentYinGrid-=1
                 elif movement.upper() == "R":
-                    pass
-                print(movement)
+                    currentYinGrid+=1
+                    matrix[currentXinGrid][currentYinGrid] = "-"
+                    currentYinGrid+=1
             
-            matrix[currentXinGrid][currentYinGrid] = "$"
-            #printing the matrix
-            for i in range(R):
-                for j in range(C):
-                    print(matrix[i][j], end = "")
-                print("")
-
-
-# 1,1 den başla ve ddru çizdir.  -->  x 1 den 2 ye gitmesi için matrix de | 0,0 | *1,0* | 2,0  a çizgi çek
-# 2,1
-# 3,1
-# 3,2
-# 2,2 
-
-## x,y verilen formatta -> aşağı git
-
-
-
-# matrix[1][0] = "|"
-# matrix[3][0] = "|"
-# matrix[4][1] = "-"
-# matrix[3][2] = "|"
+            printMatrix(matrix)
